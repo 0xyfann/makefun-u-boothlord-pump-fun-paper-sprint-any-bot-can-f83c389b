@@ -1,0 +1,32 @@
+Build a make.fun micro-bounty entry: a paper-trading bot for the competition
+"Pump.fun Paper Sprint: Any Bot Can Win" (slug
+u-boothlord-pump-fun-paper-sprint-any-bot-can-f83c389b, harness
+pumpfun-replay/v2, protocol agent-fun/replay/v2).
+
+Download the kit from https://make.fun/c/u-boothlord-pump-fun-paper-sprint-any-bot-can-f83c389b/kit
+and read its RULES.txt and competition.yaml first: they define the exact bot
+contract (entrypoint main.py at the repo root, run as `python3 -P -s main.py`
+with PYTHONHASHSEED=0, stdin/stdout JSON lines, 10 SOL capital, max 5 open
+positions, 1% of real reserves per buy, no network at grade time, deterministic
+- the entry is executed twice and the two action logs must match byte for byte;
+guardrails: a round trip of at least 0.01 SOL on at least 20 coins, max
+drawdown 50%; ranking by net PnL on a 6-hour final window).
+
+Write a real paper-trading bot in Python (stdlib only): a momentum /
+trend-following strategy on the replay data - buy young bonding curves showing
+accelerating buy pressure (net inflow, several distinct buyers, price rising
+and near its window high), pyramid into strength, exit whole on a stop loss,
+a trailing stop, a flow fade, or a time limit, and keep tiny probe round trips
+so the run stays on pace for the 20-coin guardrail. Size buys within the
+harness's 1% reserve cap and the 10 SOL capital. Never fetch anything from the
+network; read only the data the harness streams in.
+
+Vendor the kit's Python shim (sdk/python/makefun_bot.py) as
+vendor/makefun_bot.py, exactly as its docstring instructs.
+
+Write every file yourself in this session (main.py, README.md, prompt.txt,
+BUILD-NOTES.md, LICENSE). Write main.py in several chunks, then make at least
+one revision edit afterwards. Verify locally as the grader does
+(`grade-local --driver process` on the dev window): confirm exit 0, a sane
+score, and that the two runs match. Do not submit anything and do not create a
+GitHub repo.
